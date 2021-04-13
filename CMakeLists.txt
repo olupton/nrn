@@ -1,4 +1,20 @@
 cmake_minimum_required(VERSION 3.8.2 FATAL_ERROR)
+# Note that this needs to happen **before** the call to project(...). This is
+# because CMake reads the CRAYPE_LINK_TYPE environment variable inside the call
+# to project(...) and sets various flags and properties based on its value.
+# Because we are so early in the CMake processing, we have to figure out for
+# ourselves whether or not we are running on a Cray system by looking for Cray
+# environment variables directly.
+if(DEFINED ENV{CRAYPE_VERSION})
+  # Older versions of the Cray software prefer static linking by default, which
+  # doesn't work with NEURON with some compilers (GCC and Intel at the time of
+  # writing). Note that this variable will not be set in the compiler and
+  # linker runtime environments, so we are relying on CMake baking in the
+  # correct compiler flags based on the value we set here.
+  # See: https://github.com/neuronsimulator/nrn/issues/1153
+  set(ENV{CRAYPE_LINK_TYPE} dynamic)
+  message(STATUS "Cray system detected...setting CRAYPE_LINK_TYPE=dynamic")
+endif()
 project(NEURON C CXX)
 
 # =============================================================================

@@ -26,7 +26,6 @@ var hierarchy =
     [ "Area2Buf", "struct_area2_buf.html", null ],
     [ "Area2RT", "struct_area2_r_t.html", null ],
     [ "Arrayinfo", "struct_arrayinfo.html", null ],
-    [ "assoc_list", "structassoc__list.html", null ],
     [ "Background", null, [
       [ "AxisBackground", "class_axis_background.html", null ],
       [ "BoxBackground", "class_box_background.html", null ]
@@ -80,6 +79,7 @@ var hierarchy =
     ] ],
     [ "CoordinateSpace", "class_coordinate_space.html", null ],
     [ "core2nrn_callback_t", "structcore2nrn__callback__t.html", null ],
+    [ "cTemplate", "structc_template.html", null ],
     [ "Current_Triple", "struct_current___triple.html", null ],
     [ "CurrentData", "struct_current_data.html", null ],
     [ "CvMembList", "class_cv_memb_list.html", null ],
@@ -109,9 +109,6 @@ var hierarchy =
     ] ],
     [ "dl_info", "structdl__info.html", null ],
     [ "dll_s", "structdll__s.html", null ],
-    [ "doubleVec", "classdouble_vec.html", [
-      [ "doubleAVec", "classdouble_a_vec.html", null ]
-    ] ],
     [ "DoubScal", "struct_doub_scal.html", null ],
     [ "DoubVec", "struct_doub_vec.html", null ],
     [ "ECSAdiDirection", "struct_e_c_s_adi_direction.html", null ],
@@ -241,6 +238,7 @@ var hierarchy =
     [ "Item", "struct_item.html", null ],
     [ "Iter_data", "struct_iter__data.html", null ],
     [ "IVEC", "struct_i_v_e_c.html", null ],
+    [ "IvocVect", "class_ivoc_vect.html", null ],
     [ "K", "class_k.html", null ],
     [ "KEYTAB", "struct_k_e_y_t_a_b.html", null ],
     [ "KSChan", "class_k_s_chan.html", null ],
@@ -406,9 +404,6 @@ var hierarchy =
     ] ],
     [ "OcPtrVector", "class_oc_ptr_vector.html", null ],
     [ "OcPtrVector_", "struct_oc_ptr_vector__.html", null ],
-    [ "ParentVect", null, [
-      [ "IvocVect", "class_ivoc_vect.html", null ]
-    ] ],
     [ "ParseTopLevel", "class_parse_top_level.html", null ],
     [ "PathValue", "class_path_value.html", null ],
     [ "PERM", "struct_p_e_r_m.html", null ],
@@ -461,8 +456,8 @@ var hierarchy =
     [ "ReactSet", "struct_react_set.html", null ],
     [ "ReadyList", "class_ready_list.html", null ],
     [ "ReducedTree", "class_reduced_tree.html", null ],
-    [ "Regexp", "class_regexp.html", null ],
     [ "regexp", "structregexp.html", null ],
+    [ "Regexp", "class_regexp.html", null ],
     [ "REGION", "struct_r_e_g_i_o_n.html", null ],
     [ "Requirement", "class_requirement.html", null ],
     [ "Requisition", "class_requisition.html", null ],
@@ -548,6 +543,7 @@ var hierarchy =
       [ "HocValStepper", "class_hoc_val_stepper.html", null ]
     ] ],
     [ "STEState", "class_s_t_e_state.html", null ],
+    [ "STETransition", "class_s_t_e_transition.html", null ],
     [ "Stimulus", "struct_stimulus.html", null ],
     [ "StmtInfo", "class_stmt_info.html", null ],
     [ "String", "class_string.html", [
@@ -564,7 +560,6 @@ var hierarchy =
     [ "TarList", "class_tar_list.html", null ],
     [ "TaskList", "struct_task_list.html", null ],
     [ "TaskQueue", "struct_task_queue.html", null ],
-    [ "Template", "struct_template.html", null ],
     [ "Templatedatum", "union_templatedatum.html", null ],
     [ "TERM", "struct_t_e_r_m.html", null ],
     [ "TQItem", "class_t_q_item.html", null ],

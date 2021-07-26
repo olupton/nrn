@@ -263,11 +263,29 @@ endif()
 # Enable MPI
 # =============================================================================
 if(NRN_ENABLE_MPI)
-  set(MPI_DETERMINE_LIBRARY_VERSION ON)
   find_package(MPI REQUIRED)
+  set(NRNMPI 1)
+  set(PARANEURON 1)
+  # avoid linking to C++ bindings
+  add_definitions("-DMPI_NO_CPPBIND=1")
+  add_definitions("-DOMPI_SKIP_MPICXX=1")
+  add_definitions("-DMPICH_SKIP_MPICXX=1")
+
+  # FindMPI broke backward compatibility with v3.19
+  if(${CMAKE_VERSION} VERSION_LESS "3.10")
+    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC} NAME)
+  else()
+    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC_EXECUTABLE} NAME)
+  endif()
+
+  # Launching mpi executable with full path can mangle different python versions and libraries
+  # (see issue #894). ${MPIEXEC_NAME} would reinsert the full path, but ${CMAKE_COMMAND} -E env
+  # ${MPIEXEC_NAME} does not.
+  get_filename_component(MPIEXEC_NAME ${NRN_MPIEXEC_EXECUTABLE} NAME)
+
   # Detect if we have an OpenMPI v2 or older.
   if(NOT ${NRN_ENABLE_MPI_DYNAMIC})
-    execute_process(COMMAND "${MPIEXEC_EXECUTABLE}" --version
+    execute_process(COMMAND "${NRN_MPIEXEC_EXECUTABLE}" --version
                     RESULT_VARIABLE OPENMPI_TEST_RESULT
                     OUTPUT_VARIABLE OPENMPI_TEST_OUTPUT)
     set(NRN_HAVE_OPENMPI2_OR_LESS OFF)
@@ -280,22 +298,6 @@ if(NRN_ENABLE_MPI)
       message(STATUS "OPENMPI_TEST_RESULT=${OPENMPI_TEST_RESULT}")
       message(STATUS "OPENMPI_TEST_OUTPUT=${OPENMPI_TEST_OUTPUT}")
     endif()
-  endif()
-  set(NRNMPI 1)
-  set(PARANEURON 1)
-  # avoid linking to C++ bindings
-  add_definitions("-DMPI_NO_CPPBIND=1")
-  add_definitions("-DOMPI_SKIP_MPICXX=1")
-  add_definitions("-DMPICH_SKIP_MPICXX=1")
-
-  # Launching mpi executable with full path can mangle different python versions and libraries
-  # (see issue #894). ${MPIEXEC_NAME} would reinsert the full path, but ${CMAKE_COMMAND} -E env
-  # ${MPIEXEC_NAME} does not.
-  # Also, FindMPI broke backward compatibility with v3.19
-  if(${CMAKE_VERSION} VERSION_LESS "3.10")
-    get_filename_component(MPIEXEC_NAME ${MPIEXEC} NAME)
-  else()
-    get_filename_component(MPIEXEC_NAME ${MPIEXEC_EXECUTABLE} NAME)
   endif()
 else()
   set(NRNMPI 0)

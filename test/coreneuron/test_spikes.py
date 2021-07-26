@@ -134,6 +134,5 @@ if __name__ == "__main__":
         traceback.print_exc()
         # Make the CTest test fail
         sys.exit(42)
-    # The test doesn't exit without this.
-    if enable_gpu:
-        h.quit()
+    # Make sure MPI is finalised when launched via Python
+    h.quit()

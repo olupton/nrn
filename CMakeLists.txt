@@ -273,9 +273,9 @@ if(NRN_ENABLE_MPI)
 
   # FindMPI broke backward compatibility with v3.19
   if(${CMAKE_VERSION} VERSION_LESS "3.10")
-    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC} NAME)
+    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC})
   else()
-    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC_EXECUTABLE} NAME)
+    set(NRN_MPIEXEC_EXECUTABLE ${MPIEXEC_EXECUTABLE})
   endif()
 
   # Launching mpi executable with full path can mangle different python versions and libraries

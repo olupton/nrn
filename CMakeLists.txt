@@ -263,7 +263,24 @@ endif()
 # Enable MPI
 # =============================================================================
 if(NRN_ENABLE_MPI)
+  set(MPI_DETERMINE_LIBRARY_VERSION ON)
   find_package(MPI REQUIRED)
+  # Detect if we have an OpenMPI v2 or older.
+  if(NOT ${NRN_ENABLE_MPI_DYNAMIC})
+    execute_process(COMMAND "${MPIEXEC_EXECUTABLE}" --version
+                    RESULT_VARIABLE OPENMPI_TEST_RESULT
+                    OUTPUT_VARIABLE OPENMPI_TEST_OUTPUT)
+    set(NRN_HAVE_OPENMPI2_OR_LESS OFF)
+    if(${OPENMPI_TEST_RESULT} EQUAL 0 AND "${OPENMPI_TEST_OUTPUT}" MATCHES "^mpiexec \\(OpenRTE\\)")
+      message(STATUS "Detected OpenMPI ${MPI_C_VERSION}")
+      if("${MPI_C_VERSION}" VERSION_LESS 3)
+        set(NRN_HAVE_OPENMPI2_OR_LESS ON)
+      endif()
+    else()
+      message(STATUS "OPENMPI_TEST_RESULT=${OPENMPI_TEST_RESULT}")
+      message(STATUS "OPENMPI_TEST_OUTPUT=${OPENMPI_TEST_OUTPUT}")
+    endif()
+  endif()
   set(NRNMPI 1)
   set(PARANEURON 1)
   # avoid linking to C++ bindings

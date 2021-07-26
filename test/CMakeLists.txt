@@ -279,7 +279,7 @@ if(NRN_ENABLE_PYTHON AND PYTEST_FOUND)
     # discussion. Launching this test via `python` (not `special`) does not work on Linux with
     # OpenMPI 2.x and without dynamic MPI enabled in NEURON, which corresponds to the GitHub Actions
     # environment. GPU builds are already launched using `special`.
-    if(NOT ${NRN_ENABLE_MPI_DYNAMIC}
+    if((NOT ${NRN_ENABLE_MPI_DYNAMIC})
        AND (NOT ${CORENEURON_ENABLE_GPU})
        AND ${NRN_HAVE_OPENMPI2_OR_LESS})
       set(launch_spikes_mpi_file_mode_py
@@ -292,6 +292,7 @@ if(NRN_ENABLE_PYTHON AND PYTEST_FOUND)
           -python
           -pyexe
           ${PYTHON_EXECUTABLE})
+      message(STATUS "Hitting workaround")
     else()
       set(launch_spikes_mpi_file_mode_py ${modtests_launch_py_mpi})
     endif()

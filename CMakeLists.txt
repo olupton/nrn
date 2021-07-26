@@ -284,20 +284,19 @@ if(NRN_ENABLE_MPI)
   get_filename_component(MPIEXEC_NAME ${NRN_MPIEXEC_EXECUTABLE} NAME)
 
   # Detect if we have an OpenMPI v2 or older.
-  if(NOT ${NRN_ENABLE_MPI_DYNAMIC})
-    execute_process(COMMAND "${NRN_MPIEXEC_EXECUTABLE}" --version
-                    RESULT_VARIABLE OPENMPI_TEST_RESULT
-                    OUTPUT_VARIABLE OPENMPI_TEST_OUTPUT)
-    set(NRN_HAVE_OPENMPI2_OR_LESS OFF)
-    if(${OPENMPI_TEST_RESULT} EQUAL 0 AND "${OPENMPI_TEST_OUTPUT}" MATCHES "^mpiexec \\(OpenRTE\\)")
-      message(STATUS "Detected OpenMPI ${MPI_C_VERSION}")
-      if("${MPI_C_VERSION}" VERSION_LESS 3)
-        set(NRN_HAVE_OPENMPI2_OR_LESS ON)
-      endif()
-    else()
-      message(STATUS "OPENMPI_TEST_RESULT=${OPENMPI_TEST_RESULT}")
-      message(STATUS "OPENMPI_TEST_OUTPUT=${OPENMPI_TEST_OUTPUT}")
+  execute_process(COMMAND "${NRN_MPIEXEC_EXECUTABLE}" --version
+                  RESULT_VARIABLE OPENMPI_TEST_RESULT
+                  OUTPUT_VARIABLE OPENMPI_TEST_OUTPUT)
+  set(NRN_HAVE_OPENMPI2_OR_LESS OFF)
+  if(${OPENMPI_TEST_RESULT} EQUAL 0 AND "${OPENMPI_TEST_OUTPUT}" MATCHES "^mpiexec \\(OpenRTE\\) ([0-9\.]+)")
+    set(NRN_OPENMPI_VERSION "${CMAKE_MATCH_1}")
+    message(STATUS "Detected OpenMPI ${NRN_OPENMPI_VERSION}")
+    if("${NRN_OPENMPI_VERSION}" VERSION_LESS 3)
+      set(NRN_HAVE_OPENMPI2_OR_LESS ON)
     endif()
+  else()
+    message(STATUS "OPENMPI_TEST_RESULT=${OPENMPI_TEST_RESULT}")
+    message(STATUS "OPENMPI_TEST_OUTPUT=${OPENMPI_TEST_OUTPUT}")
   endif()
 else()
   set(NRNMPI 0)
